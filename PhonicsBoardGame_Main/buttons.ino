@@ -1,0 +1,109 @@
+
+
+void btn_Setup() {
+  pinMode(btn_Out1, OUTPUT);
+  pinMode(btn_Out2, OUTPUT);
+  pinMode(btn_Out3, OUTPUT);
+  pinMode(btn_Out4, OUTPUT);
+  pinMode(btn_Out5, OUTPUT);
+
+  pinMode(btn_In1, INPUT_PULLUP);
+  pinMode(btn_In2, INPUT_PULLUP);
+  pinMode(btn_In3, INPUT_PULLUP);
+  pinMode(btn_In4, INPUT_PULLUP);
+  pinMode(btn_In5, INPUT_PULLUP);
+  pinMode(btn_In6, INPUT_PULLUP);
+}
+
+
+void btn_Main() {
+  btn_Scan(scanCount);
+
+  switch (scanCount) {
+    case 1:
+      if (!digitalRead(btn_In1)) {
+        btn_SetStatus(1, 1);
+      } else {
+        btn_SetStatus(1, 0);
+      }
+      if (!digitalRead(btn_In2)) {
+        btn_SetStatus(2, 1);
+      } else {
+        btn_SetStatus(2, 0);
+      }
+      if (!digitalRead(btn_In3)) {
+        btn_SetStatus(3, 1);
+      } else {
+        btn_SetStatus(3, 0);
+      }
+      if (!digitalRead(btn_In4)) {
+        btn_SetStatus(4, 1);
+      } else {
+        btn_SetStatus(4, 0);
+      }
+      if (!digitalRead(btn_In5)) {
+        btn_SetStatus(5, 1);
+      } else {
+        btn_SetStatus(5, 0);
+      }
+      if (!digitalRead(btn_In6)) {
+        btn_SetStatus(6, 1);
+      } else {
+        btn_SetStatus(6, 0);
+      }
+      break;
+  }
+}
+
+void btn_SetStatus(uint8_t thisButton, bool thisStatus) {
+  status_PushButton[thisButton] = thisStatus;
+}
+
+void btn_Scan(uint8_t thisScan) {
+  switch (thisScan) {
+    case 0:
+      digitalWrite(btn_Out1, 1);
+      digitalWrite(btn_Out2, 1);
+      digitalWrite(btn_Out3, 1);
+      digitalWrite(btn_Out4, 1);
+      digitalWrite(btn_Out5, 1);
+      break;
+    case 1:
+      digitalWrite(btn_Out1, 0);
+      digitalWrite(btn_Out2, 1);
+      digitalWrite(btn_Out3, 1);
+      digitalWrite(btn_Out4, 1);
+      digitalWrite(btn_Out5, 1);
+      break;
+    case 2:
+      digitalWrite(btn_Out1, 1);
+      digitalWrite(btn_Out2, 0);
+      digitalWrite(btn_Out3, 1);
+      digitalWrite(btn_Out4, 1);
+      digitalWrite(btn_Out5, 1);
+      break;
+    case 3:
+      digitalWrite(btn_Out1, 1);
+      digitalWrite(btn_Out2, 1);
+      digitalWrite(btn_Out3, 0);
+      digitalWrite(btn_Out4, 1);
+      digitalWrite(btn_Out5, 1);
+      break;
+    case 4:
+      digitalWrite(btn_Out1, 1);
+      digitalWrite(btn_Out2, 1);
+      digitalWrite(btn_Out3, 1);
+      digitalWrite(btn_Out4, 0);
+      digitalWrite(btn_Out5, 1);
+      break;
+    case 5:
+      digitalWrite(btn_Out1, 1);
+      digitalWrite(btn_Out2, 1);
+      digitalWrite(btn_Out3, 1);
+      digitalWrite(btn_Out4, 1);
+      digitalWrite(btn_Out5, 0);
+      break;
+
+  }
+
+}
