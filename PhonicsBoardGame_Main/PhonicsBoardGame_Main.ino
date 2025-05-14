@@ -16,6 +16,14 @@
 
   ----------------------------------------------------------------------
 */
+#include <SoftwareSerial.h>
+#include "Arduino.h"
+#include "DFRobotDFPlayerMini.h"
+
+// Use SoftwareSerial for DFPlayer communication
+SoftwareSerial FPSerial(10, 11); // RX, TX
+DFRobotDFPlayerMini myDFPlayer;
+
 #define btn_Out1 6
 #define btn_Out2 5
 #define btn_Out3 4
@@ -31,10 +39,21 @@
 
 bool status_PushButton[32];
 uint8_t scanCount = 1;
+uint8_t pressed_button = 0;
+
 
 void setup() {
   Serial.begin(115200);
   Serial.println("System Start");
+  FPSerial.begin(9600);
+  Serial.println(F("Initializing DFPlayer..."));
+  if (!myDFPlayer.begin(FPSerial, true, true)) {
+    Serial.println(F("DFPlayer init failed!"));
+    while (true) delay(0);
+  }
+
+  myDFPlayer.volume(25); // Set volume (0–30)
+  Serial.println(F("DFPlayer Mini is ready."));
 
   btn_Setup();
   interrupt_setup();
@@ -43,14 +62,18 @@ void setup() {
 
 void loop() {
 
-  btn_Main();
-  testButton();
-}
-
-void testButton() {
-  for (int i = 0; i < 31; i++) {
-    if (status_PushButton[i]) {
-      Serial.println("Button #" + String(i) + " is pressed");
-    }
+  if (btn_Pressed()) {
+    Serial.print("a button is pressed: ");
+    Serial.println("button #" + String(pressed_button));
+    delay(100);
+    while (!btn_NoPress());
+    char thisBuffer[40];
+    sprintf(thisBuffer, "Now Playing: %03d.mp3", pressed_button);
+    Serial.println(thisBuffer);
+    myDFPlayer.play(pressed_button); // Plays mp3 corresponding to button # pressed
+    sprintf(thisBuffer, "Finished Playing %03d.mp3", pressed_button);
+    Serial.println(thisBuffer);
+    pressed_button = 0;
   }
+
 }

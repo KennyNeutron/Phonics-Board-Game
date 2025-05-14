@@ -23,7 +23,6 @@
 SoftwareSerial FPSerial(10, 11); // RX, TX
 DFRobotDFPlayerMini myDFPlayer;
 
-void printDetail(uint8_t type, int value);
 void setup() {
   FPSerial.begin(9600);
   Serial.begin(115200);
@@ -42,7 +41,4 @@ void setup() {
 }
 
 void loop() {
-
-
-
 }
