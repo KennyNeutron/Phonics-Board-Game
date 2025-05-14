@@ -35,7 +35,7 @@ uint8_t scanCount = 1;
 void setup() {
   Serial.begin(115200);
   Serial.println("System Start");
-  pinMode(btn_Out1, INPUT_PULLUP);
+
   btn_Setup();
   interrupt_setup();
 
@@ -48,9 +48,9 @@ void loop() {
 }
 
 void testButton() {
-  for (int i = 0; i < 7; i++) {
+  for (int i = 0; i < 31; i++) {
     if (status_PushButton[i]) {
-      Serial.println("Button" + String(i) + " is pressed");
+      Serial.println("Button #" + String(i) + " is pressed");
     }
   }
 }
