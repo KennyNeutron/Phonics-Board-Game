@@ -52,9 +52,10 @@ void setup() {
     while (true) delay(0);
   }
 
-  myDFPlayer.volume(25); // Set volume (0–30)
+  myDFPlayer.volume(20); // Set volume (0–30)
   Serial.println(F("DFPlayer Mini is ready."));
-
+  myDFPlayer.play(1);
+  delay(5000);
   btn_Setup();
   interrupt_setup();
 
@@ -71,6 +72,7 @@ void loop() {
     sprintf(thisBuffer, "Now Playing: %03d.mp3", pressed_button);
     Serial.println(thisBuffer);
     myDFPlayer.play(pressed_button); // Plays mp3 corresponding to button # pressed
+
     sprintf(thisBuffer, "Finished Playing %03d.mp3", pressed_button);
     Serial.println(thisBuffer);
     pressed_button = 0;
